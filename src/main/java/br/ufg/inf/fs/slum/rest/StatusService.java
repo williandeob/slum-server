@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/statusService")
 public class StatusService {
-
+	
 	@Path("getStatus")
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
