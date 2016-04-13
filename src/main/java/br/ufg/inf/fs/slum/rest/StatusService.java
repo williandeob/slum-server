@@ -9,6 +9,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response
 
 /**
  * @author Ademar
@@ -22,9 +23,17 @@ public class StatusService {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getStatus(
+	public Response getStatus(
 			@FormParam("json") String json, 
 			@FormParam("outraKey") String outraKey) {
-		return "{\"status\":\"ok\",\"json\":\"" + json + "\",\"outraKey\":\"" + outraKey + "\"}";
+				
+		Response response = null;
+		
+		//TODO usar alguma classe para construir o json mesmo.
+		String jsonResposta = "{\"status\":\"ok\",\"json\":\"" + json + "\",\"outraKey\":\"" + outraKey + "\"}";
+		
+		response = Response.ok(jsonResposta).build();
+		
+		return response;
 	}
 }
