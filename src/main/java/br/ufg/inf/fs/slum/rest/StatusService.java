@@ -31,7 +31,6 @@ public class StatusService {
 		
 		//TODO usar alguma classe para construir o json mesmo.
 		String jsonResposta = "{\"status\":\"ok\",\"json\":\"" + json + "\",\"outraKey\":\"" + outraKey + "\"}";
-		
 		response = Response.ok(jsonResposta).build();
 		
 		return response;
