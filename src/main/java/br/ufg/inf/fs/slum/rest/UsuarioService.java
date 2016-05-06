@@ -1,6 +1,7 @@
 package br.ufg.inf.fs.slum.rest;
 
 import br.ufg.inf.fs.slum.usuario.Usuario;
+import org.json.JSONObject;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -21,10 +22,21 @@ public class UsuarioService {
     public Response registrar(String usuarioJson){
         Response response;
 
-        Usuario usuario = new Usuario();
+        Usuario usuario = populateUsuarioFromJson(usuarioJson);
 
         response = Response.ok("").build();
 
         return response;
     }
+
+    private Usuario populateUsuarioFromJson(String usuarioJson){
+        Usuario usuario = new Usuario();
+
+        JSONObject json = new JSONObject(usuarioJson);
+
+        usuario.setNome(json.get("username").toString());
+
+        return usuario;
+    }
 }
+
