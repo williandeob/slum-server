@@ -24,4 +24,13 @@
   <listener>
     <listener-class>br.ufg.inf.fs.slum.listener.SessionFactoryListener</listener-class>
   </listener>
+
+    <filter>
+        <filter-name>corsFilter</filter-name>
+        <filter-class>br.ufg.inf.fs.slum.filter.CorsFilter</filter-class>
+    </filter>
+<filter-mapping>
+<filter-name>corsFilter</filter-name>
+<url-pattern>/slum/*</url-pattern>
+</filter-mapping>
 </web-app>
