@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class UsuarioBO extends ParentBO<Usuario> {
     }
 
     public void incluir(Usuario usuario) throws RegraNegocioException {
-        beforeInsert(usuario);
+        usuario.setPassword(gerarPassword(usuario.getPassword()));
 
         super.incluir(usuario);
     }
@@ -41,7 +42,11 @@ public class UsuarioBO extends ParentBO<Usuario> {
     @Override
     public void beforeInsert(Usuario usuario) throws RegraNegocioException {
         RegraNegocioException regraNegocioException = new RegraNegocioException();
-        List<Usuario> usuarios = HibernateUtil.getFieldEq(Usuario.class, "username", usuario.getUsername());
+        HashMap<String, Object> mapProperties = new HashMap<String,Object>();
+
+        mapProperties.put("username",usuario.getUsername());
+
+        List<Usuario> usuarios = HibernateUtil.getFieldEq(Usuario.class,mapProperties );
 
         if(usuarios.size() >= 1){
             regraNegocioException.addmensagem("Já existe um usuário com este username", RegraNegocioException.TipoMensagem.ALERT_ERROR);
@@ -49,7 +54,6 @@ public class UsuarioBO extends ParentBO<Usuario> {
 
         regraNegocioException.lancar();
 
-        usuario.setPassword(gerarPassword(usuario.getPassword()));
     }
 
     @Override
@@ -57,7 +61,7 @@ public class UsuarioBO extends ParentBO<Usuario> {
 
     }
 
-    private String gerarPassword(String password){
+    public static String gerarPassword(String password){
         String saltedPassword = SALT + password;
         String hashedPassword = generateHash(saltedPassword);
 

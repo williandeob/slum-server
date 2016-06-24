@@ -13,7 +13,9 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ademar
@@ -155,12 +157,20 @@ public class HibernateUtil {
         tx = session.beginTransaction();
     }
 
-    public static <T> List<T> getFieldEq(final Class<T> type, final String propertyName, final Object value){
+    public static <T> List<T> getFieldEq(final Class<T> type, HashMap<String,Object> propertyNameValue){
         List<T> objs = null;
         try{
             startOperation();
             final Criteria crit = session.createCriteria(type);
-            crit.add(Restrictions.eq(propertyName, value));
+
+            for (Map.Entry<String, Object> entry : propertyNameValue.entrySet()) {
+                String propertyName = entry.getKey();
+                Object propertyValue = entry.getValue();
+
+                crit.add(Restrictions.eq(propertyName, propertyValue));
+            }
+
+
             objs = crit.list();
         }catch (HibernateException e){
             handleException(e);
@@ -171,6 +181,29 @@ public class HibernateUtil {
         return objs;
     }
 
+    public static <T> Object getFieldEqUnique(final Class<T> type, HashMap<String, Object> propertyNameValue){
+        Object obj = null;
+        try{
+            startOperation();
+            final Criteria crit = session.createCriteria(type);
+
+            for (Map.Entry<String, Object> entry : propertyNameValue.entrySet()) {
+                String propertyName = entry.getKey();
+                Object propertyValue = entry.getValue();
+
+                crit.add(Restrictions.eq(propertyName, propertyValue));
+            }
+
+
+            obj = crit.uniqueResult();
+        }catch (HibernateException e){
+            handleException(e);
+        }finally {
+            HibernateUtil.close(session);
+        }
+
+        return obj;
+    }
 
 	public static void shutdown() {
 		getSessionFactory().close();

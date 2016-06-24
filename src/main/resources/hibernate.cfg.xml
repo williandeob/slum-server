@@ -13,5 +13,6 @@
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">create</property>
         <mapping class="br.ufg.inf.fs.slum.usuario.Usuario"></mapping>
+        <mapping class="br.ufg.inf.fs.slum.appToken.AppToken"></mapping>
     </session-factory>
 </hibernate-configuration>
