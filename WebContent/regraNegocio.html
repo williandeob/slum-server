@@ -1,0 +1,4 @@
+<div ng-repeat="erroMensagem in mensagensError" class="alert {{erroMensagem.tipo}} alert-dismissible" role="alert">
+     <button type="button" ng-click="limpaEstaMensagemRegraNegocio(erroMensagem)" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{erroMensagem.mensagem}}
+</div>

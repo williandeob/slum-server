@@ -3,17 +3,24 @@
  */
 package br.ufg.inf.fs.slum.usuario;
 
-import br.ufg.inf.fs.slum.util.Jsonable;
-import br.ufg.inf.fs.slum.util.Persistivel;
-import org.json.JSONObject;
+import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.io.Serializable;
+
+import org.json.JSONObject;
+
+import br.ufg.inf.fs.slum.medicamento.Medicamento;
+import br.ufg.inf.fs.slum.util.Jsonable;
+import br.ufg.inf.fs.slum.util.Persistivel;
 
 /**
  * @author Ademar
@@ -41,8 +48,16 @@ public class Usuario implements Serializable,Persistivel,Jsonable {
 
     @Column(name = "password", nullable = false, length = 255)
     private String password;
+    
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<Medicamento> medicamentos;
 
 	public Usuario() {	}
+	
+	public Usuario(Long id) {
+		super();
+		this.id = id;
+	}
 
     public String getUsername() {
         return username;

@@ -23,8 +23,8 @@ public abstract class ParentBO<T extends Persistivel> {
         HibernateUtil.delete(persistivel);
     }
 
-    public void consultar(Class clazz, Long id ){
-        HibernateUtil.find(clazz,id);
+    public Object consultar(Class clazz, Long id ){
+        return HibernateUtil.find(clazz,id);
     }
 
     public abstract void beforeInsert(T persistivel) throws RegraNegocioException;
