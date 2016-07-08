@@ -30,6 +30,16 @@ public class UsuarioBO extends ParentBO<Usuario> {
             return instance;
 
     }
+    
+    public Usuario consultar(Class clazz, String username ){
+        HashMap<String, Object> mapProperties = new HashMap<String,Object>();
+
+        mapProperties.put("username",username);
+
+        Usuario usuario = (Usuario) HibernateUtil.getFieldEqUnique(Usuario.class,mapProperties );
+
+        return usuario;
+    }
 
     public void alterar(Usuario usuario) throws RegraNegocioException {
 
