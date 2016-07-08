@@ -158,6 +158,10 @@ public class HibernateUtil {
     }
 
     public static <T> List<T> getFieldEq(final Class<T> type, HashMap<String,Object> propertyNameValue){
+        return getFieldEq(type, propertyNameValue, new HashMap<String,Object>());
+    }
+
+    public static <T> List<T> getFieldEq(final Class<T> type, HashMap<String,Object> propertyNameValue, HashMap<String,Object> notPropertyNameValue){
         List<T> objs = null;
         try{
             startOperation();
@@ -168,8 +172,16 @@ public class HibernateUtil {
                 Object propertyValue = entry.getValue();
 
                 crit.add(Restrictions.eq(propertyName, propertyValue));
+
             }
 
+            for (Map.Entry<String, Object> entry : notPropertyNameValue.entrySet()) {
+                String notPropertyName = entry.getKey();
+                Object propertyValue = entry.getValue();
+
+                crit.add(Restrictions.neOrIsNotNull(notPropertyName, propertyValue));
+
+            }
 
             objs = crit.list();
         }catch (HibernateException e){
@@ -193,7 +205,6 @@ public class HibernateUtil {
 
                 crit.add(Restrictions.eq(propertyName, propertyValue));
             }
-
 
             obj = crit.uniqueResult();
         }catch (HibernateException e){

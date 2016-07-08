@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Professor Incluir</h3>
+    </div>
+    <div class="panel-body">
+        <form name="formIncluirProfessor" ng-submit="formIncluirProfessor.$valid && incluirProfessor(professor)" novalidate>
+            <fieldset class="form-group">
+                <label for="nome">*Nome:</label>
+                <input type="text" class="form-control" name="nome" ng-model="professor.nome" required>
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="nome">*Email:</label>
+                <input type="email" class="form-control" name="email" ng-model="professor.email" required>
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="nome">*Senha:</label>
+                <input type="password" class="form-control" name="senha" ng-model="professor.senha" required>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Incluir</button>
+        </form>
+    </div>
+</div>
+<div class="alert alert-danger alert-dismissible fade in" ng-hide="formIncluirProfessor.$valid" role="alert">
+    *Obrigatório
+</div>
+<regra-negocio></regra-negocio>

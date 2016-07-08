@@ -1,88 +1,180 @@
-<html ng-app="myApp">
+
+<!DOCTYPE html>
+<html ng-app="mainApp">
     <head>
-        <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="main.css" />
-        
-        <script type="text/javascript" src="angular.min.js"></script>
-        <script type="text/javascript" src="angular-resource.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-        <script type="text/javascript" src="app.js"></script>
-        <script type="text/javascript" src="usuario-app.js"></script>
-        <script type="text/javascript" src="usuario.js"></script>
-        <script type="text/javascript" src="services.js"></script>
-        <script type="text/javascript" src="controllers.js"></script>
-       
-        
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Hora Certa</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap-3.3.6.min.css" rel="stylesheet"/>
+        <link href="css/bootstrap-reset.css" rel="stylesheet"/>
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+		<link rel="stylesheet" type="text/css" href="css/select2-4.0.2.min.css"/>
+
+        <!--Animation css-->
+        <link href="css/animate.css" rel="stylesheet">
+
+        <!--Icon-fonts css-->
+		<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+		<link href="assets/ionicon/css/ionicons.min.css" rel="stylesheet"/>
+
+        <!-- sweet alerts -->
+        <link href="assets/sweet-alert/sweet-alert.min.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/helper.css" rel="stylesheet">
     </head>
+
+
+    <body>
+
+        <!-- Aside Start-->
+		<auth-logged-in>
+        <aside class="left-panel">
+            <!-- brand -->
+            <div class="logo">
+                <a href="index.html" class="logo-expanded">
+                    <i class="ion-social-buffer"></i>
+                    <span class="nav-label">Hora Certa</span>
+                </a>
+            </div>
+          
+        
+			
+				 <!-- Navbar Start -->
+				<nav class="navigation">
+					<ul class="list-unstyled">
+						<li class="active"><a ui-sref="dashboard"><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a></li>
+						<li>
+							<a ui-sref="remedios"><i class="ion-flask"></i> <span class="nav-label">Rem&#233;dios</span></a>
+						</li>
+					</ul>
+				</nav>
+			
+        </aside>
+        <!-- Aside Ends-->
+		</auth-logged-in>   
+
+
+        <!--Main Content Start -->
+        <section class="content">
+            
+			<auth-logged-in>
+            <!-- Header -->
+            <header class="top-head container-fluid">
+                <button type="button" class="navbar-toggle pull-left">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+					 <!-- Left navbar -->
+					<nav class=" navbar-default" role="navigation">
+						<!-- Right navbar -->
+						<ul class="nav navbar-nav navbar-right top-menu top-right-menu">  
+
+							<!-- user login dropdown start-->
+							<li class="dropdown text-center">
+								<a data-toggle="dropdown" class="dropdown-toggle">
+									<img alt="" src="imagens/avatar-2.jpeg" class="img-circle profile-img thumb-sm">
+									<span class="username"><auth-username></auth-username> </span> <span class="caret"></span>
+								</a>
+
+
+								<ul class="dropdown-menu pro-menu fadeInUp animated" tabindex="5003" style="overflow: hidden; outline: none;">
+									<li><a ui-sref="profile"><i class="fa fa-briefcase"></i>Perfil</a></li>
+									<li><a ng-controller = "LogoutController as logoutCtr" ng-click="logout()"><i class="fa fa-sign-out"></i> Sair</a></li>
+								</ul>
+							</li>
+							<!-- user login dropdown end -->       
+						</ul>
+						<!-- End right navbar -->
+					</nav>
+				
+				   </header>
+				</auth-logged-in>
+  
+                
+         
+            <!-- Header Ends -->
+
+            <!-- Page Content Start -->
+            <!-- ================== -->
+
+            <div class="wraper container-fluid">
+				<div ui-view></div>
+            </div>
+            <!-- Page Content Ends -->
+            <!-- ================== -->
+
     
-    <body ng-controller="LoginController as login">
-    <div class="container">
-    	<div class="row">
-			<div class="col-md-6 col-md-offset-3" ng-controller="TabController as tab">
-				<div class="panel panel-login">
-					<div class="panel-heading">
-						<div class="row">
-							<div class="col-xs-6" ng-click="tab.selectTab(1)">
-								<a href="#" ng-class="{active:tab.isSelected(1)}" id="login-form-link">Login</a>
-							</div>
-							<div class="col-xs-6" ng-click="tab.selectTab(2)">
-								<a href="#" ng-class="{active:tab.isSelected(2)}" id="register-form-link">Registrar</a>
-							</div>
-						</div>
-						<hr>
-					</div>
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-lg-12">
-								<form name="loginForm"  style="display: block;"  ng-show="tab.isSelected(1)" novalidate>
 
-									<div class="form-group">
-										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
-									</div>
-									<div class="form-group">
-										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Senha">
-									</div>
-									<div class="form-group">
-										<div class="row">
-											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
-											</div>
-										</div>
-                                    </div>
-								</form>
-								<form name="registerForm" ng-show="tab.isSelected(2)" ng-submit="registerForm.$valid && teste()" ng-controller="FormController as formCtr" novalidate>
+			 <regra-negocio></regra-negocio>
 
-                                    <div class="form-group">
-										<input type="text" name="nome" id="nome" ng-model="usuario.nome" ng-co tabindex="1" class="form-control" placeholder="Nome" value="" required>
-									</div>
-                                    <div class="form-group">
-										<input type="text" name="username" id="username" ng-model="usuario.username" ng-co tabindex="1" class="form-control" placeholder="Username" value="" required>
-									</div>
-									<div class="form-group">
-										<input type="email" name="email" id="email" ng-model="usuario.email" tabindex="1" class="form-control" placeholder="Email" value="" required>
-									</div>
-									<div class="form-group">
-										<input type="password" name="password" id="password" ng-model="usuario.password" tabindex="2" class="form-control" placeholder="Senha" required>
-									</div>
-									<div class="form-group">
-										<input type="password" name="confirm-password" id="confirm-password" ng-model="usuario.confirmPassword" tabindex="2" class="form-control" placeholder="Confirmar Senha" required>
-									</div>
-									<div class="form-group">
-										<div class="row">
-											<div class="col-sm-6 col-sm-offset-3">
-                                                <input type="submit" ng-click="submit()" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Registrar">
-											</div>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
 
-			</div>
-		</div>
-	</div>
-     <regra-negocio></regra-negocio>
+        </section>
+        <!-- Main Content Ends -->
+        
+
+
+        <!-- js placed at the end of the document so the pages load faster -->
+        <script type="text/javascript" src="javascript/jquery-1.12.3.min.js"></script>
+		<script type="text/javascript" src="javascript/angular.min.js"></script>
+		<script type="text/javascript" src="javascript/angular-storage.js"></script>
+        <script type="text/javascript" src="javascript/angular-route-1.2.25.js"></script>
+        <script type="text/javascript" src="javascript/angular-resource-1.5.6.min.js"></script>
+		<script type="text/javascript" src="javascript/angular-ui-router.js"></script>
+
+        <script type="text/javascript" src="javascript/bootstrap-3.3.6.min.js"></script>
+        <script type="text/javascript" src="javascript/select2-4.0.2.min.js"></script>
+
+        <script type="text/javascript" src="javascript/main-app.js"></script>
+		<script type="text/javascript" src="javascript/auth.js"></script>
+        <script type="text/javascript" src="javascript/login-app.js"></script>
+	    <script type="text/javascript" src="javascript/profile-app.js"></script>
+        <script type="text/javascript" src="javascript/profile.js"></script>
+        <script type="text/javascript" src="javascript/login.js"></script>
+        <script type="text/javascript" src="javascript/professor-app.js"></script>
+        <script type="text/javascript" src="javascript/professor.js"></script>
+     
+		
+        <script src="javascript/modernizr.min.js"></script>
+        <script src="javascript/pace.min.js"></script>
+        <script src="javascript/wow.min.js"></script>
+        <script src="javascript/jquery.scrollTo.min.js"></script>
+        <script src="javascript/jquery.nicescroll.js" type="text/javascript"></script>
+
+        <!-- Counter-up -->
+        <script src="javascript/waypoints.min.js" type="text/javascript"></script>
+        <script src="javascript/jquery.counterup.min.js" type="text/javascript"></script>
+		
+        <!-- sweet alerts -->
+        <script src="assets/sweet-alert/sweet-alert.min.js"></script>
+        <script src="assets/sweet-alert/sweet-alert.init.js"></script>
+
+        <script src="javascript/jquery.app.js"></script>
+
+        <!-- Todo -->
+        <script src="javascript/jquery.todo.js"></script>
+
+        <script type="text/javascript" src="javascript/select2-4.0.2.min.js"></script>   
+
+        <script type="text/javascript">
+        /* ==============================================
+             Counter Up
+             =============================================== */
+            jQuery(document).ready(function($) {
+                $('.counter').counterUp({
+                    delay: 100,
+                    time: 1200
+                });
+            });
+        </script>
+    
+
     </body>
 </html>

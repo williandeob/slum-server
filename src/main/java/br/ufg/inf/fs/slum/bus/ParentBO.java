@@ -14,7 +14,7 @@ public abstract class ParentBO<T extends Persistivel> {
         HibernateUtil.saveOrUpdate(persistivel);
     }
 
-    public void alterar(T persistivel){
+    public void alterar(T persistivel) throws RegraNegocioException{
         beforeUpdate(persistivel);
         HibernateUtil.saveOrUpdate(persistivel);
     }
@@ -28,5 +28,5 @@ public abstract class ParentBO<T extends Persistivel> {
     }
 
     public abstract void beforeInsert(T persistivel) throws RegraNegocioException;
-    public abstract void beforeUpdate(T persistivel);
+    public abstract void beforeUpdate(T persistivel) throws RegraNegocioException;
 }

@@ -1,0 +1,8 @@
+
+<div class="alert-container" ng-show="mensagensRegraNegocio.length">
+    <div class="alert {{mensagemRegraNegocio.tipo}}" role="alert" ng-repeat="mensagemRegraNegocio in mensagensRegraNegocio">
+        <button type="button" class="close" ng-click="limpaEstaMensagemRegraNegocio(mensagemRegraNegocio);"><span aria-hidden="true">&nbsp;&times;</span></button>
+        {{mensagemRegraNegocio.mensagem}}
+    </div>
+    <button type="button" id="limpaMensagensRegraNegocio" class="btn btn-link" ng-show="mensagensRegraNegocio.length > 1" ng-click="limpaMensagensRegraNegocio();">Limpar Mensagens</button>
+</div>

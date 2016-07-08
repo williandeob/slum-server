@@ -1,0 +1,63 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Professor Consultar</h3>
+    </div>
+    <div class="panel-body">
+        <div class="menuAcoes">
+             <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-primary" ng-click="editarProfessor(professor);">Editar</button>
+                <button type="button" class="btn btn-primary" ng-click="excluirProfessor(professor);">Excluir</button>
+            </div>
+        </div>
+        
+        <table class="table-form">
+            <tr>
+                <td>
+                     <fieldset class="form-group">
+                        <label for="nome">Nome:</label>
+                        <input type="text" class="form-control" name="nome" value="{{professor.nome}}" readonly>
+                    </fieldset>
+                </td>
+                <td>
+                    <fieldset class="form-group">
+                        <label for="nome">Matricula:</label>
+                        <input type="text" class="form-control" name="matricula" value="{{professor.matricula}}" readonly>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                     <fieldset class="form-group">
+                        <label for="nome">E-mail:</label>
+                        <input type="text" class="form-control" name="email" value="{{professor.email}}" readonly>
+                    </fieldset>
+                </td>
+                <td>
+                    <fieldset class="form-group">
+                        <label for="nome">Data Matricula:</label>
+                        <input type="text" class="form-control" name="dataMatricula" value="{{professor.dataMatricula}}" readonly>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <fieldset class="form-group">
+                        <label>Ativo:</label>
+                        <div class="c-inputs-stacked">
+                            <label class="c-input c-radio">
+                                <input name="ativo" value="true" ng-checked="professor.ativo" type="radio" disabled>
+                                Sim
+                            </label>
+                            <br/>
+                            <label class="c-input c-radio">
+                                <input name="ativo" value="false" ng-checked="!professor.ativo" type="radio" disabled>
+                                Não
+                            </label>
+                        </div>
+                    </fieldset>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<regra-negocio></regra-negocio>

@@ -1,0 +1,25 @@
+<nav ng-show="totalObjetosPaginacao > pageSize">
+    <ul class="pagination">
+        <li>
+            <a href="" ng-click="setCurrentPage(0);">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li>
+            <a href="" ng-click="paginaAnterior();">
+                <span aria-hidden="true">&lsaquo;</span>
+            </a>
+        </li>
+        <li ng-class="{'active' : currentPage == pagina}" ng-click="setCurrentPage(pagina);" ng-repeat="pagina in paginasPaginacao()"><a href="">{{pagina+1}}</a></li>
+        <li>
+            <a href="" ng-click="proximaPagina();">
+                <span aria-hidden="true">&rsaquo;</span>
+            </a>
+        </li>
+        <li>
+            <a href="" ng-click="setCurrentPage(totalDePaginas);">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

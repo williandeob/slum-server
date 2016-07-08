@@ -3,24 +3,17 @@
  */
 package br.ufg.inf.fs.slum.usuario;
 
-import java.io.Serializable;
-import java.util.List;
+import br.ufg.inf.fs.slum.util.Jsonable;
+import br.ufg.inf.fs.slum.util.Persistivel;
+import org.json.JSONObject;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.json.JSONObject;
-
-import br.ufg.inf.fs.slum.medicamento.Medicamento;
-import br.ufg.inf.fs.slum.util.Jsonable;
-import br.ufg.inf.fs.slum.util.Persistivel;
+import java.io.Serializable;
 
 /**
  * @author Ademar
@@ -48,9 +41,6 @@ public class Usuario implements Serializable,Persistivel,Jsonable {
 
     @Column(name = "password", nullable = false, length = 255)
     private String password;
-    
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, orphanRemoval = true)
-	private List<Medicamento> medicamentos;
 
 	public Usuario() {	}
 	
@@ -103,9 +93,11 @@ public class Usuario implements Serializable,Persistivel,Jsonable {
     public JSONObject toJSON() throws Exception {
         JSONObject jsonObject = new JSONObject();
 
+        jsonObject.put("id" ,id);
         jsonObject.put("username" ,username);
         jsonObject.put("nome" ,nome);
         jsonObject.put("email" ,email);
+        jsonObject.put("password" ,password);
 
         return jsonObject;
     }
@@ -114,9 +106,10 @@ public class Usuario implements Serializable,Persistivel,Jsonable {
     public void populateFromStringJSON(String jsonString) {
         JSONObject json = new JSONObject(jsonString);
 
-        setUsername(json.get("username").toString());
-        setNome(json.get("nome").toString());
-        setEmail(json.get("email").toString());
-        setPassword(json.get("password").toString());
+        setId(json.has("id") ?  json.getLong("id") : null);
+        setUsername(json.has("username") ?  json.getString("username") : null);
+        setNome(json.has("nome") ?  json.getString("nome") : null);
+        setEmail(json.has("email") ?  json.getString("email") : null);
+        setPassword(json.has("password") ?  json.getString("password") : null);
     }
 }

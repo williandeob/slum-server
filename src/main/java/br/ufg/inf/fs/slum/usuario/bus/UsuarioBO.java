@@ -1,15 +1,16 @@
 package br.ufg.inf.fs.slum.usuario.bus;
 
-import br.ufg.inf.fs.slum.bus.ParentBO;
-import br.ufg.inf.fs.slum.bus.RegraNegocioException;
-import br.ufg.inf.fs.slum.usuario.Usuario;
-import br.ufg.inf.fs.slum.util.HibernateUtil;
-import org.apache.log4j.Logger;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import br.ufg.inf.fs.slum.bus.ParentBO;
+import br.ufg.inf.fs.slum.bus.RegraNegocioException;
+import br.ufg.inf.fs.slum.usuario.Usuario;
+import br.ufg.inf.fs.slum.util.HibernateUtil;
 
 /**
  * Created by lucas.campos on 5/19/2016.
@@ -30,10 +31,10 @@ public class UsuarioBO extends ParentBO<Usuario> {
 
     }
 
-    public void incluir(Usuario usuario) throws RegraNegocioException {
-        usuario.setPassword(gerarPassword(usuario.getPassword()));
+    public void alterar(Usuario usuario) throws RegraNegocioException {
 
-        super.incluir(usuario);
+        super.alterar(usuario);
+
     }
 
     /* [1] Não pode existir um usuario com o mesmo username
@@ -57,8 +58,21 @@ public class UsuarioBO extends ParentBO<Usuario> {
     }
 
     @Override
-    public void beforeUpdate(Usuario persistivel) {
+    public void beforeUpdate(Usuario usuario) throws RegraNegocioException {
+        RegraNegocioException regraNegocioException = new RegraNegocioException();
+        HashMap<String, Object> mapProperties = new HashMap<String,Object>();
+        HashMap<String, Object> notMapProperties = new HashMap<String,Object>();
 
+        mapProperties.put("username",usuario.getUsername());
+        notMapProperties.put("id",usuario.getId());
+
+        List<Usuario> usuarios = HibernateUtil.getFieldEq(Usuario.class,mapProperties,notMapProperties );
+
+        if(usuarios.size() >= 1){
+            regraNegocioException.addmensagem("Já existe um usuário com este username", RegraNegocioException.TipoMensagem.ALERT_ERROR);
+        }
+
+        regraNegocioException.lancar();
     }
 
     public static String gerarPassword(String password){

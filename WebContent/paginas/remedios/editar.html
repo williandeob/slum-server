@@ -1,0 +1,71 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Professor Editar</h3>
+    </div>
+    <div class="panel-body">        
+        <form name="formEditarProfessor" ng-submit="formEditarProfessor.$valid && alterarProfessor(professor)" novalidate>
+            <table class="table-form">
+                <tr>
+                    <td>
+                         <fieldset class="form-group">
+                            <label for="nome">*Nome:</label>
+                            <input type="text" class="form-control" name="nome" ng-model="professor.nome" required>
+                        </fieldset>
+                    </td>
+                    <td>
+                        <fieldset class="form-group">
+                            <label for="nome">Matricula:</label>
+                            <input type="text" class="form-control" name="matricula" ng-model="professor.matricula" readonly>
+                        </fieldset>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                         <fieldset class="form-group">
+                            <label for="nome">*E-mail:</label>
+                            <input type="email" class="form-control" name="email" ng-model="professor.email" required>
+                        </fieldset>
+                    </td>
+                    <td>
+                        <fieldset class="form-group">
+                            <label for="nome">Data Matricula:</label>
+                            <input type="text" class="form-control" name="dataMatricula" ng-model="professor.dataMatricula" readonly>
+                        </fieldset>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <fieldset class="form-group">
+                            <label for="nome">Senha:</label>
+                            <input type="password" class="form-control" name="senha" ng-model="professor.senha" readonly>
+                        </fieldset>
+                    </td>
+                    <td>
+                        <fieldset class="form-group">
+                            <label>Ativo:</label>
+                            <div class="c-inputs-stacked">
+                                <label class="c-input c-radio">
+                                    <input name="ativo" value="true" ng-model="professor.ativo" ng-value="true" type="radio">
+                                    Sim
+                                </label>
+                                <label class="c-input c-radio">
+                                    <input name="ativo" value="false" ng-model="professor.ativo" ng-value="false" type="radio">
+                                    Não
+                                </label>
+                            </div>
+                        </fieldset>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" class="btn btn-primary">Alterar</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<div class="alert alert-danger alert-dismissible fade in" ng-hide="formEditarProfessor.$valid" role="alert">
+    *Obrigatório
+</div>
+<regra-negocio></regra-negocio>

@@ -47,20 +47,13 @@ public class LoginService {
 
             String token = getToken(username);
 
+            JSONObject role = new JSONObject();
             JSONObject autenticacao = new JSONObject();
+            autenticacao.put("username", usuario.getUsername());
             autenticacao.put("token", token);
-            autenticacao.put("login", username);
+            autenticacao.put("refresh_token", token);
 
-            JSONObject usuarioJson = new JSONObject();
-            usuarioJson.put("id", usuario.getId());
-            usuarioJson.put("nome", usuario.getNome());
-            usuarioJson.put("email", usuario.getEmail());
-
-            JSONObject json = new JSONObject();
-            json.put("autenticacao", autenticacao);
-            json.put("usuario", usuarioJson);
-
-            response = Response.ok(json.toString()).build();
+            response = Response.ok(autenticacao.toString()).build();
         }catch (RegraNegocioException e){
             response = Response.status(ClientResponse.Status.BAD_REQUEST).entity(e.getMensagens()).build();
         }

@@ -1,0 +1,24 @@
+
+
+<div class="wraper container-fluid">
+	<div class="panel">
+		<div id="edit-profile" class="tab-pane">
+			<div class="user-profile-content">
+				<form role="form" name="usuarioForm" novalidate>
+					<div class="form-group">
+						<label for="FullName">Nome</label>
+						<input type="text" value="{{usuario.nome}}"  ng-model="usuario.nome" id="FullName" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="Email">Email</label>
+						<input type="email" value="{{usuario.email}}" ng-model="usuario.email"  id="Email" class="form-control" required>
+					</div>
+					
+					<button class="btn btn-primary" ng-click="usuarioForm.$valid && salvar(usuario)" type="submit">Salvar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
