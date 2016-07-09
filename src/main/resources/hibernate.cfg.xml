@@ -11,7 +11,7 @@
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="show_sql">true</property>
-        <property name="hbm2ddl.auto">create</property>
+<!--         <property name="hbm2ddl.auto">create</property> -->
         <mapping class="br.ufg.inf.fs.slum.usuario.Usuario"></mapping>
         <mapping class="br.ufg.inf.fs.slum.appToken.AppToken"></mapping>
         <mapping class="br.ufg.inf.fs.slum.medicamento.Medicamento"></mapping>
