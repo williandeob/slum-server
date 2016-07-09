@@ -5,6 +5,7 @@ package br.ufg.inf.fs.slum.medicamento;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.json.JSONObject;
@@ -47,6 +49,7 @@ public class Medicamento implements Serializable, Persistivel, Jsonable {
 	@Column(name = "intervalo", nullable = false)
 	private Integer intervalo;
 
+	@ManyToOne
 	@JoinColumn(name = "usuario", nullable = false)
 	private Usuario usuario;
 
@@ -102,13 +105,14 @@ public class Medicamento implements Serializable, Persistivel, Jsonable {
 	}
 
 	@Override
-	public JSONObject toJSON() throws Exception {
+	public JSONObject toJSON() {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("id", id);
 		jsonObject.put("nome", nome);
 		jsonObject.put("descricao", descricao);
-		jsonObject.put("dataInicio", dataInicio);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		jsonObject.put("dataInicio", formatter.format(dataInicio));
 		jsonObject.put("intervalo", intervalo);
 		jsonObject.put("usuarioId", usuario.getId());
 
@@ -119,11 +123,12 @@ public class Medicamento implements Serializable, Persistivel, Jsonable {
 	public void populateFromStringJSON(String jsonString) {
 		JSONObject json = new JSONObject(jsonString);
 
-		setId(json.getLong("id"));
-		setNome(json.getString("nome"));
-		setDescricao(json.getString("descricao"));
-		setDataInicio(LocalDateTime.parse(json.getString("dataInicio")));
-		setIntervalo(json.getInt("intervalo"));
-		setUsuario(new Usuario(json.getLong("usuarioId")));
+		setId(json.has("id") ? json.getLong("id") : null);
+		setNome(json.has("nome") ? json.getString("nome") : null);
+		setDescricao(json.has("descricao") ? json.getString("descricao") : null);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		setDataInicio(json.has("dataInicio") ? LocalDateTime.parse(json.getString("dataInicio"), formatter) : null);
+		setIntervalo(json.has("intervalo") ? json.getInt("intervalo") : null);
+		setUsuario(json.has("usuarioId") ? new Usuario(json.getLong("usuarioId")) : null);
 	}
 }

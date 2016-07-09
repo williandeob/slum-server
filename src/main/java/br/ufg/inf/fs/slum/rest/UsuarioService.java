@@ -51,7 +51,7 @@ public class UsuarioService {
         Usuario usuario;
 
         try {
-            usuario = usuarioBO.consultar(Usuario.class,username);
+            usuario = usuarioBO.consultar(username);
             response = Response.ok(usuario.toJSON().toString()).build();
         } catch (RegraNegocioException e) {
             response = Response.status(ClientResponse.Status.BAD_REQUEST).entity(e.getMensagens()).build();

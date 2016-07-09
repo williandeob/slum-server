@@ -23,6 +23,10 @@ public class MedicamentoBO extends ParentBO<Medicamento> {
             return instance;
 
     }
+    
+    public Medicamento consultar(Long id) {
+    	return (Medicamento) super.consultar(Medicamento.class, id);
+    }
 
     @Override
     public void beforeInsert(Medicamento medicamento) throws RegraNegocioException {

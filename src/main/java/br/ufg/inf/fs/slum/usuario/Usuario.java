@@ -3,17 +3,25 @@
  */
 package br.ufg.inf.fs.slum.usuario;
 
-import br.ufg.inf.fs.slum.util.Jsonable;
-import br.ufg.inf.fs.slum.util.Persistivel;
-import org.json.JSONObject;
+import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.io.Serializable;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import br.ufg.inf.fs.slum.medicamento.Medicamento;
+import br.ufg.inf.fs.slum.util.Jsonable;
+import br.ufg.inf.fs.slum.util.Persistivel;
 
 /**
  * @author Ademar
@@ -23,7 +31,7 @@ import java.io.Serializable;
 @Table(name = "USUARIO")
 public class Usuario implements Serializable,Persistivel,Jsonable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -9221673647166363967L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -41,6 +49,9 @@ public class Usuario implements Serializable,Persistivel,Jsonable {
 
     @Column(name = "password", nullable = false, length = 255)
     private String password;
+    
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Medicamento> medicamentos;
 
 	public Usuario() {	}
 	
@@ -89,7 +100,15 @@ public class Usuario implements Serializable,Persistivel,Jsonable {
         this.password = password;
     }
 
-    @Override
+    public List<Medicamento> getMedicamentos() {
+		return medicamentos;
+	}
+
+	public void setMedicamentos(List<Medicamento> medicamentos) {
+		this.medicamentos = medicamentos;
+	}
+
+	@Override
     public JSONObject toJSON() throws Exception {
         JSONObject jsonObject = new JSONObject();
 
@@ -98,9 +117,20 @@ public class Usuario implements Serializable,Persistivel,Jsonable {
         jsonObject.put("nome" ,nome);
         jsonObject.put("email" ,email);
         jsonObject.put("password" ,password);
+        preencheMedicamentosEmJson(jsonObject);
 
         return jsonObject;
     }
+
+	private void preencheMedicamentosEmJson(JSONObject jsonObject) {
+		if (this.medicamentos != null && !this.medicamentos.isEmpty()) {
+        	JSONArray medicamentosJsonArray = new JSONArray();
+        	this.medicamentos.forEach(medicamento -> {
+				medicamentosJsonArray.put(medicamento.toJSON());
+        	});
+        	jsonObject.put("medicamentos", medicamentosJsonArray);
+        }
+	}
 
     @Override
     public void populateFromStringJSON(String jsonString) {

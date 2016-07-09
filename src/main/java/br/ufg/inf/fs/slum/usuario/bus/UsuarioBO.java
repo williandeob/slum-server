@@ -31,7 +31,7 @@ public class UsuarioBO extends ParentBO<Usuario> {
 
     }
     
-    public Usuario consultar(Class clazz, String username ){
+    public Usuario consultar(String username ){
         HashMap<String, Object> mapProperties = new HashMap<String,Object>();
 
         mapProperties.put("username",username);
