@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -30,7 +31,7 @@ import br.ufg.inf.fs.slum.util.Persistivel;
 @Table(name = "MEDICAMENTO")
 public class Medicamento implements Serializable, Persistivel, Jsonable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6940164488046521853L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +53,10 @@ public class Medicamento implements Serializable, Persistivel, Jsonable {
 	@ManyToOne
 	@JoinColumn(name = "usuario", nullable = false)
 	private Usuario usuario;
+	
+	@Lob
+	@Column(name = "imagem")
+	private String imagem;
 
 	public Medicamento() {
 	}
@@ -104,6 +109,14 @@ public class Medicamento implements Serializable, Persistivel, Jsonable {
 		this.usuario = usuario;
 	}
 
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
+
 	@Override
 	public JSONObject toJSON() {
 		JSONObject jsonObject = new JSONObject();
@@ -115,6 +128,9 @@ public class Medicamento implements Serializable, Persistivel, Jsonable {
 		jsonObject.put("dataInicio", formatter.format(dataInicio));
 		jsonObject.put("intervalo", intervalo);
 		jsonObject.put("usuarioId", usuario.getId());
+		if (this.imagem != null) {
+			jsonObject.put("imagem", imagem);
+		}
 
 		return jsonObject;
 	}
@@ -130,5 +146,6 @@ public class Medicamento implements Serializable, Persistivel, Jsonable {
 		setDataInicio(json.has("dataInicio") ? LocalDateTime.parse(json.getString("dataInicio"), formatter) : null);
 		setIntervalo(json.has("intervalo") ? json.getInt("intervalo") : null);
 		setUsuario(json.has("usuarioId") ? new Usuario(json.getLong("usuarioId")) : null);
+		setImagem(json.has("imagem") ? json.getString("imagem") : null);
 	}
 }
